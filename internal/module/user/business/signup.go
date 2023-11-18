@@ -2,6 +2,7 @@ package userbusiness
 
 import (
 	"context"
+	"golang.org/x/crypto/bcrypt"
 	usermodel "juliet/internal/module/user/model"
 )
 
@@ -18,6 +19,15 @@ func NewSignUpStorage(store SignUpStorage) *signUpBiz {
 }
 
 func (biz *signUpBiz) SignUpNewAccount(ctx context.Context, data *usermodel.SignUpModel) error {
+	var err error
+	var passwordHash []byte
+
+	passwordHash, err = bcrypt.GenerateFromPassword([]byte(data.Password), 10)
+	if err != nil {
+		return err
+	}
+
+	data.Password = string(passwordHash)
 	if err := biz.store.CreateNewUser(ctx, data); err != nil {
 		return err
 	}

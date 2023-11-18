@@ -6,7 +6,7 @@ import (
 )
 
 func (s *postgresStorage) CreateNewUser(ctx context.Context, data *usermodel.SignUpModel) error {
-	err := s.gorm.WithContext(ctx).Create(data).Error
+	err := s.gorm.WithContext(ctx).Create(&data).Error
 	if err != nil {
 		return err
 	}
