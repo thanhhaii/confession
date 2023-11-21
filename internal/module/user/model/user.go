@@ -18,5 +18,14 @@ type SignUpModel struct {
 }
 
 func (SignUpModel) TableName() string {
-	return "users"
+	return UserModel{}.TableName()
+}
+
+type SignInModel struct {
+	Email    string `json:"email,omitempty"`
+	Password string `json:"password,omitempty"`
+}
+
+func (SignInModel) TableName() string {
+	return UserModel{}.TableName()
 }
