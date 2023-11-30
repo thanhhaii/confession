@@ -51,8 +51,9 @@ func main() {
 	v1 := e.Group("/v1")
 	user := v1.Group("/user")
 	{
-		user.POST("/sign-up", usertransport.HandleSignUp(initializers.DB))
 		user.GET("", usertransport.HandleFindUserByEmail(initializers.DB))
+		user.GET("/list", usertransport.HandleGetListUser(initializers.DB))
+		user.POST("/sign-up", usertransport.HandleSignUp(initializers.DB))
 		user.POST("/sign-in", usertransport.HandleSignIn(initializers.DB, service.tokenFactory))
 	}
 
